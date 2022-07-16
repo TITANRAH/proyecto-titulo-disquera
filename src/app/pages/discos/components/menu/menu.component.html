@@ -1,0 +1,23 @@
+<mat-nav-list>
+    <a *ngIf="estadoUsuario" routerLink="/listado" mat-list-item (click)="onClicked()">
+        <mat-icon mat-list-icon>music_note</mat-icon>
+        <span class="separacion">HOME</span>
+    </a>
+
+    <a *ngIf="!estadoUsuario" routerLink="/registrar" mat-list-item (click)="onClicked()">
+        <mat-icon mat-list-icon>person_add</mat-icon>
+        <span class="separacion">REGISTRARSE</span>
+    </a>
+
+    <a *ngIf="!estadoUsuario" routerLink="/" mat-list-item (click)="onClicked()">
+        <mat-icon mat-list-icon>login</mat-icon>
+        <span class="separacion">LOGIN</span>
+    </a>
+
+    <mat-list-item>
+        <button *ngIf="estadoUsuario"  mat-icon-button (click)="logout()">
+            <mat-icon>eject</mat-icon>
+            <span class="separacion">SALIR</span>
+        </button>
+    </mat-list-item>
+</mat-nav-list>

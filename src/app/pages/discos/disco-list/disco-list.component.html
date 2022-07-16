@@ -1,0 +1,46 @@
+<!-- <h1>Discos Favoritos</h1> -->
+
+<!-- agrego el formmodule en module, le doy un identificador f al formulario -->
+<!-- creo la funcion y le paso la f en el boton de typo submit puedo guardar y acceder asi a los valores -->
+
+<!-- <form (ngSubmit)="guardarDisco(f)" #f="ngForm">
+
+    <input type="text" name="nombreDisco" ngModel required>
+    
+    <button type="submit">Agregar Disco</button>
+</form> -->
+<!-- SI VIENE VACIO CON EL REQUIRED DEVOLVERA FALSO Y SI VIENE LLENA SERA TRUE -->
+
+<!-- si elimino un disco al tocarlo es por que desde el componente disco envio un emit 
+todos los discos ingresados tienen esto por que estoy iterando el componente con la data por lo tanto todos puedo
+tocarlos y hara la funcion que declaro aca abajo y enlazo a mi emit -->
+<!-- <app-disco *ngFor="let disco of discos" [tituloDisco]="disco" (discoClicked)="eliminarDisco($event)"></app-disco> -->
+
+<!-- la data que representara la tabla estara en datasorce -->
+<!-- esto recorre linea por linea el arrgelo y va creando las filas -->
+<table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+        <td mat-cell *matCellDef="let element">{{element.titulo}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+        <td mat-cell *matCellDef="let element">{{element.descripcion}}</td >
+    </ng-container>
+
+    <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción</th>
+        <td mat-cell *matCellDef="let element">{{element.precio}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="autor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+        <td mat-cell *matCellDef="let element">{{element.autor}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="desplegarColumnas"></tr>
+    <tr mat-row *matRowDef="let row, columns: desplegarColumnas;"></tr>
+    
+
+</table>

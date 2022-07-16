@@ -1,0 +1,11 @@
+PARA ANGULAR MATERIAL
+
+ng add @angular/material
+
+ICONOS MATERIAL
+
+https://jossef.github.io/material-design-icons-iconfont/
+
+esto me sirve para generar id automaticos y luego pasarlo a string
+
+Math.round(Math.random() * 10000).toString()

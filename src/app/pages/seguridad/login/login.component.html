@@ -1,0 +1,39 @@
+<section fxLayoutAlign="center">
+    <mat-card>
+        <form #f="ngForm" 
+              (ngSubmit)="loginUsuario(f)"
+              fxLayout="column"
+              fxLayoutAlign="center center"
+              fxLayoutGap="10px">
+            <mat-form-field>
+                <mat-label>Ingrese E-mail</mat-label>
+                <input type="email"
+                       matInput
+                       placeholder="email"
+                       name="email"
+                       ngModel
+                       required
+                       #emailInput="ngModel">
+                <mat-error *ngIf="emailInput.hasError('required')">El email no puede estar vacío</mat-error>
+                <mat-error *ngIf="!emailInput.hasError('required')">El email es invalido</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label>Ingrese Password</mat-label>
+                <input type="password"
+                       matInput
+                       placeholder="password"
+                       name="email"
+                       ngModel
+                       required>
+                       
+                <mat-error>Debe ingresar un Password</mat-error>
+            </mat-form-field>
+            <button type="submit" 
+                    mat-raised-button color="primary"
+                    [disabled]="f.invalid">Login</button>
+        </form>
+    </mat-card>
+
+</section>
+

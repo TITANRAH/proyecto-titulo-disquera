@@ -1,0 +1,23 @@
+<mat-toolbar color="warn">
+    <button mat-icon-button (click)="onClicked()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <div class="botones" fxHide.xs>
+
+        <button *ngIf="estadoUsuario" mat-button routerLink="/listado">
+            Home
+        </button>
+
+        <button *ngIf="!estadoUsuario" mat-button routerLink="/registrar">
+            Registrar
+        </button>
+
+        <button *ngIf="!estadoUsuario" mat-button routerLink="/">
+            Login
+        </button>
+    </div>
+    <span class="spacer"></span>
+        <button *ngIf="estadoUsuario"  mat-button (click)="logout()">
+            Logout
+        </button>
+</mat-toolbar>
