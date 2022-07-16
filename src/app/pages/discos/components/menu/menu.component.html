@@ -14,10 +14,12 @@
         <span class="separacion">LOGIN</span>
     </a>
 
-    <mat-list-item>
-        <button *ngIf="estadoUsuario"  mat-icon-button (click)="logout()">
-            <mat-icon>eject</mat-icon>
+   
+
+        <a *ngIf="estadoUsuario" routerLink="/" mat-list-item (click)="logout()">
+            <mat-icon mat-list-icon>eject</mat-icon>
             <span class="separacion">SALIR</span>
-        </button>
-    </mat-list-item>
+        </a>
+
+    
 </mat-nav-list>

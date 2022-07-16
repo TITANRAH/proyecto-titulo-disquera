@@ -21,7 +21,7 @@ export class DiscoComponent implements OnInit {
   onClicked() {
     //this.discoClicked.emit(this.tituloDisco);
 
-    this.discosService.eliminarDisco(this.tituloDisco)
+    //this.discosService.eliminarDisco()
   }
 
 

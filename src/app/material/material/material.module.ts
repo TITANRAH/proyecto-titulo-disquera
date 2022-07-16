@@ -10,7 +10,12 @@ import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   
   exports:[
@@ -23,8 +28,18 @@ import {MatSortModule} from '@angular/material/sort';
     MatListModule,
     MatCardModule,
     MatTableModule,
-    MatSortModule
-  ]
+    MatSortModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    // para las fechas a parte de poner el provider debo traer este modulo
+    MatNativeDateModule
+    
+  ],
+
+  // esto lo hago para pasar las fechas a español
+  providers:[{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}]
  
 })
 export class MaterialModule { }

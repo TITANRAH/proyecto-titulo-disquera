@@ -10,6 +10,7 @@ import { MaterialModule } from '../../material/material/material.module';
 import { RouterModule } from '@angular/router';
 import { MenuComponent } from './components/menu/menu.component';
 import { BarraComponent } from './components/barra/barra.component';
+import { DiscoNuevoComponent } from './components/disco-nuevo/disco-nuevo.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { BarraComponent } from './components/barra/barra.component';
     HomeComponent, 
     MenuComponent, 
     BarraComponent, 
+    DiscoNuevoComponent
     
   ],
   exports: [
@@ -31,6 +33,9 @@ import { BarraComponent } from './components/barra/barra.component';
     FormsModule,
     MaterialModule,
     RouterModule
-  ]
+  ],
+
+  // con esto indico que disco nuevo component es invocado por otro componenten
+  entryComponents: [DiscoNuevoComponent]
 })
 export class DiscosModule { }
