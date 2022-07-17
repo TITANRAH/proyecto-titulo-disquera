@@ -20,7 +20,7 @@
                     </mat-form-field>
 
                    <mat-form-field>
-                    <mat-label>Ingrese Titulo</mat-label>
+                    <mat-label>Ingrese Descripcion</mat-label>
                     <input type="text"
                             matInput
                             placeholder="ejem. Disco credo en el año 2010"
@@ -47,15 +47,9 @@
                         name='autor' 
                         aria-placeholder="Seleccione un Autor(mc)"
                         (selectionChange)="selected($event)">
-                            <mat-option value="1">
-                                Gran rah
-                            </mat-option>
-                            <mat-option value="2">
-                                Chyste mc
-                            </mat-option>
-                            <mat-option value="3">
-                                mc Jhon
-                            </mat-option>
+                         <mat-option *ngFor="let autor of autores" [value]="autor._id">
+                            {{autor.seudonimo}}
+                         </mat-option>
                         </mat-select>
                     </mat-form-field>
 

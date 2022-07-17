@@ -17,9 +17,13 @@ export class LoginComponent implements OnInit {
 
   // le pasamos los datos generados en el formulario email y password en un objeto
   loginUsuario(form: NgForm){
-    this.seguridadService.login({
-      email: form.value.email, 
-      password: form.value.password
-    });
+
+    if(!form.invalid){
+      this.seguridadService.login({
+        email: form.value.email, 
+        password: form.value.password
+      });
+
+    }
   }
 }

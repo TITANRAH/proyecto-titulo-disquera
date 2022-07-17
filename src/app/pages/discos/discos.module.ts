@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { MenuComponent } from './components/menu/menu.component';
 import { BarraComponent } from './components/barra/barra.component';
 import { DiscoNuevoComponent } from './components/disco-nuevo/disco-nuevo.component';
+import { AutorListComponent } from './autores/autor-list/autor-list.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { DiscoNuevoComponent } from './components/disco-nuevo/disco-nuevo.compon
     HomeComponent, 
     MenuComponent, 
     BarraComponent, 
-    DiscoNuevoComponent
+    DiscoNuevoComponent, 
+    AutorListComponent
     
   ],
   exports: [

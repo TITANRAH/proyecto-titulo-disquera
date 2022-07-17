@@ -1,11 +1,14 @@
 export interface Disco {
 
-    discoId: number,
+    id?: number | null,
     titulo: string
     descripcion: string,
     precio: number,
-    fechaPublicacion?: Date,
-    autor?: string
+    fechaPublicacion: Date,
+    autor: {
+        id: string,
+        seudonimo: string
+    }
 }
 
 // export interface Autor {

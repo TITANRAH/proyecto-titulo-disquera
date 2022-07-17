@@ -5,7 +5,11 @@
     <div class="botones" fxHide.xs>
 
         <button *ngIf="estadoUsuario" mat-button routerLink="/listado">
-            Home
+            DISCOS
+        </button>
+
+        <button *ngIf="estadoUsuario" mat-button routerLink="/autores">
+            AUTORES
         </button>
 
         <button *ngIf="!estadoUsuario" mat-button routerLink="/registrar">

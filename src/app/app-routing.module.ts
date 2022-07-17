@@ -15,6 +15,8 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/discos/discos.module').then( m => m.DiscosModule)
   },
+
+ 
  
 
 

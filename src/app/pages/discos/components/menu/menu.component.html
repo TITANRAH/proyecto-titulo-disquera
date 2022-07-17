@@ -1,7 +1,12 @@
 <mat-nav-list>
     <a *ngIf="estadoUsuario" routerLink="/listado" mat-list-item (click)="onClicked()">
         <mat-icon mat-list-icon>music_note</mat-icon>
-        <span class="separacion">HOME</span>
+        <span class="separacion">DISCOS</span>
+    </a>
+
+    <a *ngIf="estadoUsuario" routerLink="/autores" mat-list-item (click)="onClicked()">
+        <mat-icon mat-list-icon>mic</mat-icon>
+        <span class="separacion">IR A AUTORES</span>
     </a>
 
     <a *ngIf="!estadoUsuario" routerLink="/registrar" mat-list-item (click)="onClicked()">
@@ -16,10 +21,10 @@
 
    
 
-        <a *ngIf="estadoUsuario" routerLink="/" mat-list-item (click)="logout()">
-            <mat-icon mat-list-icon>eject</mat-icon>
-            <span class="separacion">SALIR</span>
-        </a>
+    <a *ngIf="estadoUsuario" routerLink="/" mat-list-item (click)="logout()">
+        <mat-icon mat-list-icon>eject</mat-icon>
+        <span class="separacion">SALIR</span>
+    </a>
 
     
 </mat-nav-list>
