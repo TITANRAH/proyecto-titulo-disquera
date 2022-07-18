@@ -9,3 +9,11 @@ https://jossef.github.io/material-design-icons-iconfont/
 esto me sirve para generar id automaticos y luego pasarlo a string
 
 Math.round(Math.random() * 10000).toString()
+
+https://regexlib.com/ para buscar expresiones regulares para validar por ejemplo correos
+
+por ejem lo usamos en el match: de el schema usuario para mongo en el servidor
+
+^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$
+
+EL HTTP INTERCEPTOR INTERCEPTA LOS REQUEST Y AGREGA EL HEADER Y DENTRO VAN EL AUTORIZATHION Y EL TOKEN

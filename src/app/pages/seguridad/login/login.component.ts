@@ -10,6 +10,8 @@ import { SeguridadService } from '../services/seguridad.service';
 })
 export class LoginComponent implements OnInit {
 
+  correo:any;
+  clave:any;
   constructor(private seguridadService : SeguridadService) { }
 
   ngOnInit(): void {
@@ -18,12 +20,16 @@ export class LoginComponent implements OnInit {
   // le pasamos los datos generados en el formulario email y password en un objeto
   loginUsuario(form: NgForm){
 
+    console.log(form.value.email)
+    console.log(form.value.password)
     if(!form.invalid){
       this.seguridadService.login({
         email: form.value.email, 
         password: form.value.password
       });
 
+      // CUANDO RESIVA EL TOKEN LO GUARDARE PARA PODER GESTIONAR DENTRO DE LA APP
+      // EN STORAGE
     }
   }
 }

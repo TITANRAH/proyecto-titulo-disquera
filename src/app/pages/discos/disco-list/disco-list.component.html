@@ -21,15 +21,15 @@ tocarlos y hara la funcion que declaro aca abajo y enlazo a mi emit -->
 
  <!-- esto a un error $event.target.value solucion $any($event.target).value -->
 <div class="buscador" fxLayoutAlign="center">
-<!-- <mat-form-field fxFlex="">
+<mat-form-field fxFlex="">
     <input type="text"
            matInput
            placeholder="Ingrese Texto"
-           (keyup)="hacerFiltro($any($event.target).value)">
-</mat-form-field> -->
+           (keyup)="hacerFiltro($event)">
+</mat-form-field>
 </div>
 
-<table mat-table [dataSource]="dataSource" matSort>
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="ordenarColumna($event)">
     <ng-container matColumnDef="titulo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Album</th>
         <td mat-cell *matCellDef="let element">{{element.titulo}}</td>
@@ -47,7 +47,7 @@ tocarlos y hara la funcion que declaro aca abajo y enlazo a mi emit -->
 
     <ng-container matColumnDef="autor">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
-        <td mat-cell *matCellDef="let element">{{element.autor}}</td>
+        <td mat-cell *matCellDef="let element">{{element.autor.seudonimo}}</td>
     </ng-container>
     
 

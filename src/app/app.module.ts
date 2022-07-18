@@ -7,7 +7,8 @@ import { DiscosModule } from './pages/discos/discos.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material/material/material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SeguridadInterceptorService } from './pages/seguridad/services/seguridad-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     DiscosModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: SeguridadInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {  NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { DiscosService } from '../../../services/discos.service';
 import { Subscription } from 'rxjs';
 import { Disco } from '../interfaces/disco.interface';
@@ -9,6 +9,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DiscoNuevoComponent } from '../components/disco-nuevo/disco-nuevo.component';
 import { Pagination } from '../interfaces/pagination.interface';
+import { ActivatedRouteSnapshot } from '@angular/router';
 // on obervable nos avisa de cambios de comportamiento oe stado 
 
 @Component({
@@ -16,13 +17,16 @@ import { Pagination } from '../interfaces/pagination.interface';
   templateUrl: './disco-list.component.html',
   styleUrls: ['./disco-list.component.css']
 })
-export class DiscoListComponent implements OnInit{
+export class DiscoListComponent implements OnInit, OnDestroy {
+
+  timeOut: any = null;
 
 
-  discos:Disco[] = [];
+  //arreglo de discos
+  discos: Disco[] = [];
 
   // data de la tabla
-  desplegarColumnas = ['titulo','descripcion','precio', 'autor']
+  desplegarColumnas = ['titulo', 'descripcion', 'precio', 'autor']
   dataSource = new MatTableDataSource<Disco>()
 
   //discoSubscription!: Subscription
@@ -31,20 +35,25 @@ export class DiscoListComponent implements OnInit{
   @ViewChild(MatSort) ordenamiento!: MatSort
   @ViewChild(MatPaginator) paginacion!: MatPaginator
   private discoSubscription: Subscription = new Subscription()
-  
+
   totalDiscos = 0;
   discosPorPagina = 2;
-  paginaCombo = [1,2,5,10];
-  paginaActual= 1;
+  paginaCombo = [1, 2, 5, 10];
+  paginaActual = 1;
   sort = 'titulo';
   sortDirection = 'asc';
-  filterValue = null;
+  filterValue = {valor: '',
+                 propiedad: ''
+                  };
 
 
   constructor(private discosService: DiscosService,
-              private dialog: MatDialog) {
- 
-   }
+    private dialog: MatDialog) {
+
+  }
+  ngOnDestroy(): void {
+    this.discoSubscription.unsubscribe()
+  }
 
   //  estudiar es despues de iniciar el componente
 
@@ -55,12 +64,13 @@ export class DiscoListComponent implements OnInit{
 
     //primero ejecuto el componente libro
     this.discosService.obtenerDiscos(
-                                      this.discosPorPagina,
-                                      this.paginaActual,
-                                      this.sort,
-                                      this.sortDirection,
-                                      this.filterValue);
-    this.discosService.getPaginationActual().subscribe((pagination: Pagination)=>{
+      this.discosPorPagina,
+      this.paginaActual,
+      this.sort,
+      this.sortDirection,
+      this.filterValue);
+
+      this.discoSubscription = this.discosService.getPaginationActual().subscribe((pagination: Pagination) => {
 
       this.dataSource = new MatTableDataSource<Disco>(pagination.data);
       this.totalDiscos = pagination.totalRows
@@ -72,8 +82,8 @@ export class DiscoListComponent implements OnInit{
     // esto me mantiene actualizado el data source 
     // cada vez que entro al componente
     //this.dataSource.data = this.discosService.obtenerDiscos()
-   // this.discoSubscription = this.discosService.discosSubjet.subscribe(()=>{
-     //this.dataSource.data = this.discosService.obtenerDiscos()
+    // this.discoSubscription = this.discosService.discosSubjet.subscribe(()=>{
+    //this.dataSource.data = this.discosService.obtenerDiscos()
     //});
     // cada vez que agrego un nuevo disco y este se agrega dentrop del arreglo
     // que esta en el servicio, el metodo agregar discos contiene un subject que envia la 
@@ -81,64 +91,119 @@ export class DiscoListComponent implements OnInit{
     // this.discos = this.discosService.obtenerDiscos()
     // this.discoSubscription = this.discosService.discosSubjet.subscribe((resp:any) => {
     //   this.discos = resp
-      
-    
+
+
     // })
 
     //this.discos = this.discosService.obtenerDiscos();
-   
-    
+
+
   }
 
   // el page event permite actulizar la data de la pagina actual 
-  eventoPaginador(event: PageEvent){
+  eventoPaginador(event: PageEvent) {
 
     this.discosPorPagina = event.pageSize;
     // siempre comienza en cero por lo que le sumamos 1
     this.paginaActual = event.pageIndex + 1;
     this.discosService.obtenerDiscos(
-                                      this.discosPorPagina,
-                                      this.paginaActual,
-                                      this.sort,
-                                      this.sortDirection,
-                                      this.filterValue
-                                    );
-
-  }
-
-  //ngAfterViewInit(): void {
-
-    // aqui llamamos a los viewchild y le decimos que despues de que se inicie el componente 
-    // asigne esos valores
-
-    // this.dataSource.sort = this.ordenamiento
-    // this.dataSource.paginator = this.paginacion
-  //}
-
-  //hacerFiltro(filtro: string){
-    // con esto filtramos la data
-    // this.dataSource.filter = filtro
-  //}
-
- openDialog(){
-    //el parametro de open es un componente
-   const dialogRef = this.dialog.open(DiscoNuevoComponent,{
-     width: '35rem', 
-    });
-
-    dialogRef.afterClosed().subscribe(()=>{
       this.discosPorPagina,
       this.paginaActual,
       this.sort,
       this.sortDirection,
       this.filterValue
-    })
- }
+    );
 
-//
+  }
+
+  //ngAfterViewInit(): void {
+
+  // aqui llamamos a los viewchild y le decimos que despues de que se inicie el componente 
+  // asigne esos valores
+
+  // this.dataSource.sort = this.ordenamiento
+  // this.dataSource.paginator = this.paginacion
+  //}
+
+  hacerFiltro(event:any) {
+
+    // clearTimeout(this.timeOut)
+    let $this = this;
+
+    // this.timeOut = setTimeout(function(){
+
+    // },1000)
+
+
+    // si no teclea la tecla enter eso significa event.keyCode != 13
+
+    setTimeout(() => {
+      if (event.keyCode !== 13) {
+
+        const filterValorLocal = {
+          valor: event.target.value,
+          propiedad: 'titulo'
+          
+
+        };
+          $this.filterValue = filterValorLocal
+        $this.discosService.obtenerDiscos(
+          $this.discosPorPagina,
+          $this.paginaActual,
+          $this.sort,
+          $this.sortDirection,
+          $this.filterValue
+        );
+        console.log(filterValorLocal)
+        //reemplazamos el filtervalue por el filtervalorlocal para hacer el filtro
+
+      }
+    }, 1000)
+
+
+    //con esto filtramos la data
+    //ahora enviaremos la consulta a la base de datos
+    //buscamos genererar el request cuando el usuario deje de escribir
+    //this.dataSource.filter = filtro
+  }
+
+  ordenarColumna(event: any) {
+    // el evento tiene el nombre de la propiedad que quiero organizar
+    //por lo que en vez de sort ponemos como parametro el event active
+    // que ccontiene el nombre de columna en mi tabla
+    // lo mismo como event direction
+    // la base de datos devuelve el ordenamieto oprganizado 
+    // la rapidez de las consultas es por usar mongo db
+    this.sort = event.active;
+    this.sortDirection = event.direction;
+    this.discosService.obtenerDiscos(
+      this.discosPorPagina,
+      this.paginaActual,
+      this.sort,
+      this.sortDirection,
+      this.filterValue
+    );
+  }
+
+  openDialog() {
+    //el parametro de open es un componente
+    const dialogRef = this.dialog.open(DiscoNuevoComponent, {
+      width: '35rem',
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.discosPorPagina,
+        this.paginaActual,
+        this.sort,
+        this.sortDirection,
+        this.filterValue
+    })
+  }
+
+  //
 
   // guardarDisco(f: NgForm){
-    
+
   //   // el objeto f tiene una propiadad llamada valid si es ngForm eso 
   //   // determina si tiene un valor por dentro o no
   //   if(f.valid){
@@ -146,11 +211,11 @@ export class DiscoListComponent implements OnInit{
   //   }
   // }
 
-  
+
 
   // eliminarDisco(disco:any){
 
-    
+
   //   // mi lista sera actualizada cuando le de click a un disco que sea igual a disco que este dentro de disco, 
   //   // this.discos = this.discos.filter( listaDeDiscos => listaDeDiscos !== disco)
   // }

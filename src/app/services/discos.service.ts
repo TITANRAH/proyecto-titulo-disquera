@@ -32,7 +32,7 @@ export class DiscosService {
                 paginaActual: number, 
                 sort: any,
                 sortDirection: string,
-                filterValor: any) {
+                filterValue: any) {
 
     let endPoint = 'disco/pagination'
 
@@ -43,7 +43,7 @@ export class DiscosService {
       page: paginaActual,
       sort,
       sortDirection,
-      filterValor
+      filterValue
     }
     // envio el request y el servidor me responde con el resp
       this.http.post<Pagination>(`${this.baseUrl}${endPoint}`,request).subscribe(

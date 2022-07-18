@@ -7,6 +7,6 @@ export interface Pagination{
     sortDirection: string;
     pageQuantity: number;
     data: Disco[];
-    filterValue: {};
+    filterValor: {};
     totalRows: number;
 }
