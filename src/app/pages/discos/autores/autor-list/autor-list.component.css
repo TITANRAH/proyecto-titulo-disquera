@@ -6,3 +6,19 @@ table {
     width: 50%;
    
 }
+
+#boton-agregar{
+  right: 45px;
+  bottom: 45px;
+  left: auto;
+  /* va a ubicarse sobre cualquier elemento que se encuentre 
+  con absolute */
+  position: absolute;
+}
+
+.buscador{
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  
+}
