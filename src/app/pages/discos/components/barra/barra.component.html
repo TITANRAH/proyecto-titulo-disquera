@@ -13,15 +13,15 @@
         </button>
 
         <button *ngIf="!estadoUsuario" mat-button routerLink="/registrar">
-            Registrar
+            REGISTRAR
         </button>
 
         <button *ngIf="!estadoUsuario" mat-button routerLink="/">
-            Login
+            LOGIN
         </button>
     </div>
     <span class="spacer"></span>
         <button class="logout" *ngIf="estadoUsuario"  mat-button (click)="logout()">
-            Logout
+            <mat-icon>logout</mat-icon>
         </button>
 </mat-toolbar>

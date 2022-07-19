@@ -12,6 +12,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { BarraComponent } from './components/barra/barra.component';
 import { DiscoNuevoComponent } from './components/disco-nuevo/disco-nuevo.component';
 import { AutorListComponent } from './autores/autor-list/autor-list.component';
+import { AutorNuevoComponent } from './components/autor-nuevo/autor-nuevo.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AutorListComponent } from './autores/autor-list/autor-list.component';
     MenuComponent, 
     BarraComponent, 
     DiscoNuevoComponent, 
-    AutorListComponent
+    AutorListComponent, 
+    AutorNuevoComponent
     
   ],
   exports: [

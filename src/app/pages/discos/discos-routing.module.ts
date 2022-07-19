@@ -19,33 +19,14 @@ const routes: Routes = [
         component: DiscoListComponent, 
         canActivate: [VigilanteGuard],
       },
-      // {
-      //   path: 'agregar',
-      //   component: DiscoComponent,
-      //   canActivate: [VigilanteGuard]  
-      // },
       {
         path: 'autores',
         component: AutorListComponent,
-        // canActivate: [VigilanteGuard]  
+        canActivate: [VigilanteGuard],
+        
       },
      
-      // {
-      //   path: 'editar/:id',
-      //   component: AgregarComponent
-      // },
-      // {
-      //   path: 'buscar',
-      //   component: BuscarComponent
-      // },
-      // {
-      //   path: ':id',
-      //   component: HeroeComponent
-      // },    
-      // {
-      //   path:'**',
-      //   redirectTo: 'listado'
-      // }
+    
       ],
       
     

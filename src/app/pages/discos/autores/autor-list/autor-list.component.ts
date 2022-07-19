@@ -3,6 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AutorService } from 'src/app/services/autor.service';
 import { Autor } from '../../interfaces/autor.interface';
 import { Subscription } from 'rxjs';
+import { DialogRef } from '@angular/cdk/dialog';
+import { AutorNuevoComponent } from '../../components/autor-nuevo/autor-nuevo.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-autor-list',
@@ -21,7 +24,8 @@ export class AutorListComponent implements OnInit, OnDestroy {
 
   autorSubscription = new Subscription();
 
-  constructor(private autoresService: AutorService) { }
+  constructor(private autoresService: AutorService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -31,6 +35,9 @@ export class AutorListComponent implements OnInit, OnDestroy {
         this.dataSource.data = autores
       }
     )
+
+  
+
     // lleno la data de la table con la obtencion de la respuesta del servicio
     //this.dataSource.data = this.autoresService.getAutores()
   }
@@ -39,6 +46,24 @@ export class AutorListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log('se desuscribio de autores')
     this.autorSubscription.unsubscribe();
+  }
+
+  openDialog() {
+    //el parametro de open es un componente
+    const dialogRef = this.dialog.open(AutorNuevoComponent, {
+      width: '35rem',
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      // this.discosPorPagina,
+      this.autoresService.getAutores();
+      this.autorSubscription = this.autoresService.getActualList().subscribe(
+        (autores: Autor[]) => {
+          this.dataSource.data = autores
+        }
+      )
+        
+    })
   }
 
 

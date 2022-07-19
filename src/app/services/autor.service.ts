@@ -11,10 +11,21 @@ export class AutorService {
 
   baseUrl = environment.baseUrl;
 
-  private autoresSubject = new Subject<Autor[]>();
+  private autoresSubject:any = new Subject<Autor[]>();
   private autoresLista: Autor[]=[];
 
   constructor(private http : HttpClient) { }
+
+  crearAutor(autor: Autor){
+    let endPoint = 'DisqueraAutor'
+    this.http.post(`${this.baseUrl}${endPoint}`,autor ).subscribe((resp)=>{
+      this.autoresSubject.next();
+    })
+  }
+
+  getActualAutor(){
+    return this.autoresSubject.asObservable();
+  }
 
   getAutores(){ 
     let endPoint = 'DisqueraAutor';

@@ -3,7 +3,7 @@
     <!-- agregar al final en propiedad del form(ngSubmit)="registrarUsuario(f)" -->
     <form fxLayout="column"
           fxLayoutAlign="center center"
-          
+          (ngSubmit)="registrarUsuario(f)"
           #f="ngForm"
           fxLayoutGap="13px">
         <mat-form-field>
@@ -63,7 +63,7 @@
                    placeholder="ingresa password" 
                    ngModel name="password"
                    minlength="7">
-                   <mat-error>El password debe tener mínimo 7 caracteres</mat-error>
+                   <mat-error>El password debe tener mínimo 7 caracteres, MAYUSCULAS, minuscualas y carateres especiales</mat-error>
         </mat-form-field>
         <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Guardar</button>
     </form>

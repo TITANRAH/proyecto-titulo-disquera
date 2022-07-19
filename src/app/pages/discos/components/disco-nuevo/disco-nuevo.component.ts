@@ -39,7 +39,7 @@ export class DiscoNuevoComponent implements OnInit, OnDestroy {
     //this.autores = this.autorServices.getAutores();
 
     this.autorServices.getAutores();
-    this.autorSubscription = this.autorServices.getActualList().subscribe((autores)=>{
+    this.autorSubscription = this.autorServices.getActualList().subscribe((autores:any)=>{
       this.autores = autores;
     });
   }

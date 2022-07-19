@@ -1,5 +1,5 @@
 export interface Autor{
-    _id: string,
+    _id?: string,
     nombre: string,
     seudonimo: string,
     estilo: string,

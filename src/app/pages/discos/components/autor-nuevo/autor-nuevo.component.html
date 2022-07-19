@@ -1,0 +1,71 @@
+<form #f="ngForm" 
+    (ngSubmit)="guardarAutor(f)">
+<h2 mat-dialog-title> Agregar Autor </h2>
+<mat-dialog-content fxFlex="100%">
+    <section fxLayoutAlign="center">
+        <mat-card fxFlex="100%">
+            <div fxLayout="column"
+                  fxLayoutAlign="center center"
+                  fxLayoutGap="25px">
+                  <mat-form-field>
+                    <mat-label>Ingrese Nombre</mat-label>
+                    <input type="text"
+                           matInput
+                           placeholder="ejem. Sergio"
+                           name="nombre"
+                           ngModel
+                           required >
+                     <mat-error>Debe ingresar el nombre del autor</mat-error>
+                    </mat-form-field>
+
+                   <mat-form-field>
+                    <mat-label>Ingrese Seudonimo</mat-label>
+                    <input type="text"
+                            matInput
+                            placeholder="ejem. Gran Rah"
+                            name="seudonimo"
+                            ngModel
+                            required >
+                    <mat-error>Debe ingresar el Seudónimo del Autor</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+
+                    <mat-label>Ingrese Nombre completo del Autor</mat-label>
+                    <input type="text"
+                            matInput
+                            placeholder="ejem. 10000$"
+                            name="nombreCompleto"
+                            ngModel
+                            required >
+                    <mat-error>Debe ingresar el Nombre completo del Autor</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+
+                        <mat-label>Ingrese estilo del Autor</mat-label>
+                        <input type="text"
+                                matInput
+                                placeholder="ejem. Rap"
+                                name="estilo"
+                                ngModel
+                                required >
+                        <mat-error>Debe ingresar el Nombre completo del Autor</mat-error>
+                        </mat-form-field>
+                    
+
+
+                    <!-- esto contendra el elemento que seleccione del dialogo -->
+                  
+
+            </div>
+        </mat-card>
+    </section>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="botones-dialog">
+        
+        <button color="warn" mat-icon-button [mat-dialog-close]="true"><mat-icon>close</mat-icon></button>
+        <button color="primary" mat-icon-button ><mat-icon>check</mat-icon></button>
+    </div>
+</mat-dialog-actions>
+</form>

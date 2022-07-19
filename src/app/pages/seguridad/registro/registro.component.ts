@@ -14,14 +14,16 @@ export class RegistroComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // registrarUsuario(form: NgForm){
-  //     this.SeguridadService.registrarUsuario({
-  //       email: form.value.email,
-  //       password: form.value.password,
-  //       apellidos: form.value.apellidos,
-  //       nombre: form.value.nombre,
-  //       username: form.value.username,
-  //       usuarioId: ''
-  //     })
-  // }
+  registrarUsuario(form: NgForm){
+      this.SeguridadService.registrarUsuario({
+        email: form.value.email,
+        password: form.value.password,
+        apellido: form.value.apellidos,
+        nombre: form.value.nombre,
+        username: form.value.username,
+        usuarioId: '',
+        token: ''
+        
+      })
+  }
 }

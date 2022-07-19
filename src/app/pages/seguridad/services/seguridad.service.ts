@@ -24,60 +24,109 @@ export class SeguridadService {
 
   private usuario!: Usuario;
 
-  getToken(){
+  getToken() {
     //DEVUELVO EL TOKEN
     return this.token;
     //AHORA NECESITO QUE EL SEGURIDAD INTERCEPTOR TENGA ACCESO 
   }
 
+  //ESTE METODO SERA EL PRIMERO QUE SE CARGE AL RECARGAR O ENTRAR A LA PAGINA
+  //POR ESO LO INVOCO DESDE APP COMPONENT 
+  //LO QUE HARA ES BUSCAR EN EL BROWSER SI ESTA LA VARIABLE TOKEN Y SI EXISTE
+  // VA A CAGAR AL USUARIO EN SESION
+  cargarUsuario() {
+    const tokenBrowser = localStorage.getItem('token');
+
+    if (!tokenBrowser) {
+      return;
+    }
+
+    this.token = tokenBrowser;
+    this.seguridadCambio.next(true);
+    const endPoint = 'usuario'
+    this.http.get<Usuario>(`${this.baseUrlUser}${endPoint}`)
+      .subscribe((resp) => {
+
+        console.log('respuesta del login', resp)
+        // CARGO EL TOKEN A LA VARIABLE TOKEN DECLARADA
+        this.token = resp.token;
+        this.usuario = {
+          email: resp.email,
+          nombre: resp.nombre,
+          apellido: resp.apellido,
+          token: resp.token,
+          password: '',
+          username: resp.username,
+          usuarioId: resp.usuarioId
+        };
+
+        this.seguridadCambio.next(true);
+        localStorage.setItem('token', resp.token);
+        this.router.navigate(['/listado'])
+      });
+
+
+  }
+
   constructor(private router: Router,
-              private http: HttpClient) { }
+    private http: HttpClient) { }
 
   // necesitamos enviar desde aca, el cliente, la data a registrar
   // la variable usuario tiene que setearse con el parametro que envio desde fuera
 
   // LO QUE ENVIAMOS 
   registrarUsuario(usr: Usuario) {
+    //EVENTO DE TIPO POST, DEVUELVE UN USUARIO 
+    console.log('login data', usr)
+    const endPoint = 'usuario/registrar'
 
-    // this.usuario = {
-    //   email: usr.email,
-    //   nombre: usr.nombre,
-    //   usuarioId: Math.round(Math.random() * 10000).toString(),
-    //   apellidos: usr.apellidos,
-    //   username: usr.username,
-    //   password: '',
-    // };
+    this.http.post<Usuario>(`${this.baseUrlUser}${endPoint}`, usr)
+      .subscribe((resp) => {
+        console.log('login data', usr)
+        console.log('respuesta del login', resp)
+        // CARGO EL TOKEN A LA VARIABLE TOKEN DECLARADA
+        this.token = resp.token;
+        this.usuario = {
+          email: resp.email,
+          nombre: resp.nombre,
+          apellido: resp.apellido,
+          token: resp.token,
+          password: '',
+          username: resp.username,
+          usuarioId: resp.usuarioId
+        };
 
-    // con esto cada vez que un usuario se registre se 
-    // disparara un evento 
-    // this.seguridadCambio.next(true);
-    // this.router.navigate(['/'])
+        this.seguridadCambio.next(true);
+        localStorage.setItem('token', resp.token)
+        this.router.navigate(['/listado'])
+      });
   }
 
   // LO QUE RECIBIMOS
   login(loginData: LoginData) {
-    console.log('login data',loginData)
+    console.log('login data', loginData)
     const endPoint = 'usuario/login'
 
     this.http.post<Usuario>(`${this.baseUrlUser}${endPoint}`, loginData)
-    .subscribe((resp)=> {
-      console.log('login data',loginData)
-      console.log('respuesta del login',resp)
-      // CARGO EL TOKEN A LA VARIABLE TOKEN DECLARADA
-      this.token = resp.token;
-      this.usuario = {
-        email: resp.email,
-        nombre: resp.nombre,
-        apellidos: resp.apellidos,
-        token: resp.token,
-        password:'',
-        username: resp.username,
-        usuarioId: resp.usuarioId
-      };
+      .subscribe((resp) => {
+        console.log('login data', loginData)
+        console.log('respuesta del login', resp)
+        // CARGO EL TOKEN A LA VARIABLE TOKEN DECLARADA
+        this.token = resp.token;
+        this.usuario = {
+          email: resp.email,
+          nombre: resp.nombre,
+          apellido: resp.apellido,
+          token: resp.token,
+          password: '',
+          username: resp.username,
+          usuarioId: resp.usuarioId
+        };
 
-      this.seguridadCambio.next(true);
-      this.router.navigate(['/listado'])
-    });
+        this.seguridadCambio.next(true);
+        localStorage.setItem('token', resp.token)
+        this.router.navigate(['/listado'])
+      });
 
     // this.usuario = {
     //   email: loginData.email,
@@ -87,13 +136,13 @@ export class SeguridadService {
     //   username: '',
     //   password:'',
     // }
-  // con esto cada vez que un usuario se loguee se 
+    // con esto cada vez que un usuario se loguee se 
     // disparara un evento 
     // this.seguridadCambio.next(true);
     // this.router.navigate(['/listado'])
   }
 
- 
+
 
   logout() {
     // this.usuario = {
@@ -105,9 +154,10 @@ export class SeguridadService {
     //   password: '',
     // }
 
-      // con esto cada vez que un usuario se desloguee se 
+    // con esto cada vez que un usuario se desloguee se 
     // disparara un evento en false
     this.seguridadCambio.next(false);
+    localStorage.removeItem('token');
     this.router.navigate(['/'])
   }
 
@@ -116,13 +166,13 @@ export class SeguridadService {
     return { ...this.usuario }
   }
 
-  
+
   // esto me sirve para el guard implementado
-  onSesion(){
+  onSesion() {
     // esto devuelve un true o un false
     // si hay usuario esta declaracioon es false
     // si no hay usuario esta dlaracion es true
-    return this.usuario != null;
+    return this.token != null;
   }
 
 
