@@ -9,7 +9,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DiscoNuevoComponent } from '../components/disco-nuevo/disco-nuevo.component';
 import { Pagination } from '../interfaces/pagination.interface';
-import { ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, ActivatedRoute } from '@angular/router';
+import { DiscoComponent } from '../disco/disco.component';
 // on obervable nos avisa de cambios de comportamiento oe stado 
 
 @Component({
@@ -26,7 +27,7 @@ export class DiscoListComponent implements OnInit, OnDestroy {
   discos: Disco[] = [];
 
   // data de la tabla
-  desplegarColumnas = ['titulo', 'descripcion', 'precio', 'autor']
+  desplegarColumnas = ['titulo', 'descripcion', 'precio', 'autor', 'eliminar']
   dataSource = new MatTableDataSource<Disco>()
 
   //discoSubscription!: Subscription
@@ -48,7 +49,8 @@ export class DiscoListComponent implements OnInit, OnDestroy {
 
 
   constructor(private discosService: DiscosService,
-    private dialog: MatDialog) {
+              private dialog: MatDialog,
+             ) {
 
   }
   ngOnDestroy(): void {
@@ -60,7 +62,7 @@ export class DiscoListComponent implements OnInit, OnDestroy {
 
 
 
-  ngOnInit(): void {
+  ngOnInit() {
 
     //primero ejecuto el componente libro
     this.discosService.obtenerDiscos(
@@ -70,7 +72,7 @@ export class DiscoListComponent implements OnInit, OnDestroy {
       this.sortDirection,
       this.filterValue);
 
-      this.discoSubscription = this.discosService.getPaginationActual().subscribe((pagination: Pagination) => {
+      this.discoSubscription =  this.discosService.getPaginationActual().subscribe((pagination: Pagination) => {
 
       this.dataSource = new MatTableDataSource<Disco>(pagination.data);
       this.totalDiscos = pagination.totalRows
@@ -190,17 +192,44 @@ export class DiscoListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DiscoNuevoComponent, {
       width: '35rem',
     });
+    
+      dialogRef.afterClosed().subscribe(() => {
+        this.discosPorPagina,
+          this.paginaActual,
+          this.sort,
+          this.sortDirection,
+          this.filterValue
+      })
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.discosPorPagina,
-        this.paginaActual,
-        this.sort,
-        this.sortDirection,
-        this.filterValue
-    })
+    
+   
+   
   }
 
-  //
+  async deleteDisco(id:Disco){
+
+    await this.discosService.eliminarDisco(id)
+
+    
+
+      this.discoSubscription = this.discosService.getPaginationActual().subscribe((pagination: Pagination) => {
+
+      this.dataSource = new MatTableDataSource<Disco>(pagination.data);
+      this.totalDiscos = pagination.totalRows
+    })
+    await this.discosService.obtenerDiscos(
+       this.discosPorPagina,
+       this.paginaActual,
+       this.sort,
+       this.sortDirection,
+       this.filterValue);
+
+       window.location.reload();
+       
+     }
+
+    
+    //
 
   // guardarDisco(f: NgForm){
 

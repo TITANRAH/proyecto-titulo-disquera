@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { DialogRef } from '@angular/cdk/dialog';
 import { AutorNuevoComponent } from '../../components/autor-nuevo/autor-nuevo.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-autor-list',
@@ -15,24 +16,29 @@ import { MatDialog } from '@angular/material/dialog';
 export class AutorListComponent implements OnInit, OnDestroy {
 
   //defino las columnas que iran en table 
-  desplegarColumnas = ['nombre', 'seudonimo','estilo', 'nombreCompleto'] 
+  desplegarColumnas = ['nombre', 'seudonimo','estilo', 'nombreCompleto', 'eliminar'] 
 
   // defino el nombre de la variable que contendra
   // la data de la table, la cual llenaremos con la obtencion de autores
   // desde el servicio, y esto lo realizo en ngonit
   dataSource = new MatTableDataSource<Autor>();
-
+  
+  autorEdit!:Autor;
   autorSubscription = new Subscription();
 
   constructor(private autoresService: AutorService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
+               
+               }
 
   ngOnInit(): void {
 
     this.autoresService.getAutores();
     this.autorSubscription = this.autoresService.getActualList().subscribe(
       (autores: Autor[]) => {
-        this.dataSource.data = autores
+        this.dataSource.data = autores    
       }
     )
 
@@ -65,6 +71,28 @@ export class AutorListComponent implements OnInit, OnDestroy {
         
     })
   }
+
+   async deleteAutor(id:any){
+
+    
+    
+     await this.autoresService.deleteAutor(id)
+   
+    this.autoresService.getAutores();
+    this.autorSubscription = this.autoresService.getActualList().subscribe(
+      (autores: Autor[]) => {
+
+       
+        this.dataSource.data = autores
+        this.router.navigate([this.activatedRoute])
+      }
+    )
+    
+    
+    
+    
+  }
+
 
 
 }

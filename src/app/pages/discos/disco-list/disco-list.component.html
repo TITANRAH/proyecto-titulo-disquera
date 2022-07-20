@@ -49,6 +49,11 @@ tocarlos y hara la funcion que declaro aca abajo y enlazo a mi emit -->
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
         <td mat-cell *matCellDef="let element">{{element.autor.seudonimo}}</td>
     </ng-container>
+
+    <ng-container matColumnDef="eliminar">
+        <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+        <td mat-cell *matCellDef="let element"><button mat-icon-button (click)="deleteDisco(element._id)" ><mat-icon color="warn">close</mat-icon></button></td>
+    </ng-container>
     
 
     <tr mat-header-row *matHeaderRowDef="desplegarColumnas"></tr>

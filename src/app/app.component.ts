@@ -8,9 +8,15 @@ import { SeguridadService } from './pages/seguridad/services/seguridad.service';
 })
 export class AppComponent implements OnInit{
   title = 'Disquera';
+ 
 
-  constructor(private seguridadService: SeguridadService){}
+  constructor(private seguridadService: SeguridadService){
+
+    
+  }
   ngOnInit(): void {
+   
     this.seguridadService.cargarUsuario();
+
   }
 }

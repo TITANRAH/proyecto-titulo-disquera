@@ -25,7 +25,8 @@ const routes: Routes = [
         canActivate: [VigilanteGuard],
         
       },
-     
+
+   
     
       ],
       

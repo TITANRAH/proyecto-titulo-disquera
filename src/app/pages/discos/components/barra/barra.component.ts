@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy, Input } from '@angular/core';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 import { Subscription } from 'rxjs';
+import { Usuario } from 'src/app/pages/seguridad/interfaces/usuario.interface';
 
 @Component({
   selector: 'app-barra',
@@ -10,9 +11,11 @@ import { Subscription } from 'rxjs';
 export class BarraComponent implements OnInit, OnDestroy {
 
   @Output() sidenav = new EventEmitter
+  
 
   estadoUsuario: any;
   usuarioSubscription: Subscription = new Subscription
+  nombreUsuario:any;
 
   constructor(private seguridadService: SeguridadService) { }
  
@@ -22,13 +25,17 @@ export class BarraComponent implements OnInit, OnDestroy {
     this.usuarioSubscription = this.seguridadService.seguridadCambio.subscribe(status => {
       this.estadoUsuario = status
     })
+    
+   this.nombreUsuario = localStorage.getItem('usuario')
   }
   onClicked() {
     this.sidenav.emit();
   }
 
   logout(){
+    localStorage.removeItem('usuario')
     this.seguridadService.logout()
+    
   }
 
   ngOnDestroy(): void {

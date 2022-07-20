@@ -10,6 +10,7 @@ import { DiscosService } from '../../../../services/discos.service';
 import { Autor } from '../../interfaces/autor.interface';
 import { Subscription } from 'rxjs';
 import { Disco } from '../../interfaces/disco.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-disco-nuevo',
@@ -24,7 +25,7 @@ export class DiscoNuevoComponent implements OnInit, OnDestroy {
   selectAutorTexto!: string;
   fechaPublicacion!: string;
   
-  autorSubscription = new Subscription()
+  discoSubscription = new Subscription()
 
   autores: Autor[] = []
 
@@ -32,14 +33,15 @@ export class DiscoNuevoComponent implements OnInit, OnDestroy {
   
   constructor(private discosService: DiscosService,
               private dialogRef: DialogRef,
-              private autorServices: AutorService) { }
+              private autorServices: AutorService,
+             ) { }
  
 
   ngOnInit(): void {
     //this.autores = this.autorServices.getAutores();
 
     this.autorServices.getAutores();
-    this.autorSubscription = this.autorServices.getActualList().subscribe((autores:any)=>{
+    this.discoSubscription = this.autorServices.getActualList().subscribe((autores:any)=>{
       this.autores = autores;
     });
   }
@@ -74,17 +76,23 @@ export class DiscoNuevoComponent implements OnInit, OnDestroy {
       }
 
       this.discosService.agregarDisco(discoRequest);
-      this.autorSubscription = this.discosService.agregarDiscoListener().subscribe(()=>{
+      this.discoSubscription = this.discosService.agregarDiscoListener().subscribe(()=>{
         this.dialogRef.close()
       })
     }
+
+    
 
   }
 
 
 
   ngOnDestroy(): void {
-    this.autorSubscription.unsubscribe()
+    this.discosService.agregarDiscoListener().subscribe(()=>{
+      this.dialogRef.close()
+    })
+    
+    this.discoSubscription.unsubscribe()
   }
 
 }

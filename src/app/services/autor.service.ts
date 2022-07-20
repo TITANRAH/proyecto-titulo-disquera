@@ -40,6 +40,34 @@ export class AutorService {
   getActualList(){
     return this.autoresSubject.asObservable();
   }
+
+   deleteAutor(id:Autor){
+    let endPoint = 'DisqueraAutor/';
+     this.http.delete<Autor[]>(`${this.baseUrl}${endPoint}${id}`).subscribe((resp)=>{
+       console.log(resp);
+       
+    })
+  }
+
+  getActualListEliminada(){
+    return this.autoresSubject.asObservable();
+  }
+
+  // editarAutor(id:Autor, autorEdit: Autor){
+
+    
+  //   let endPoint = 'DisqueraAutor/';
+  //   this.http.put<Autor>(`${this.baseUrl}${endPoint}${id}`, autorEdit).subscribe((resp)=>{
+      
+  //     this.autoresSubject.next();
+      
+     
+  //   })
+  // }
+
+  // deleteAutorActual(){
+  //   return this.autoresSubject.asObservable();
+  // }
 }
 
 

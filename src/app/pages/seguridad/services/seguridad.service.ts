@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class SeguridadService {
 
   private token!: any;
+  private nombreUsuario:any
 
   baseUrlUser = environment.baseUrlUser
 
@@ -35,13 +36,16 @@ export class SeguridadService {
   //LO QUE HARA ES BUSCAR EN EL BROWSER SI ESTA LA VARIABLE TOKEN Y SI EXISTE
   // VA A CAGAR AL USUARIO EN SESION
   cargarUsuario() {
+    
     const tokenBrowser = localStorage.getItem('token');
-
+    
     if (!tokenBrowser) {
       return;
     }
 
     this.token = tokenBrowser;
+    
+   
     this.seguridadCambio.next(true);
     const endPoint = 'usuario'
     this.http.get<Usuario>(`${this.baseUrlUser}${endPoint}`)
@@ -61,11 +65,15 @@ export class SeguridadService {
         };
 
         this.seguridadCambio.next(true);
+        
+        
         localStorage.setItem('token', resp.token);
+        
+        
         this.router.navigate(['/listado'])
       });
-
-
+      
+      
   }
 
   constructor(private router: Router,
@@ -98,19 +106,20 @@ export class SeguridadService {
 
         this.seguridadCambio.next(true);
         localStorage.setItem('token', resp.token)
+        
         this.router.navigate(['/listado'])
       });
   }
 
   // LO QUE RECIBIMOS
   login(loginData: LoginData) {
-    console.log('login data', loginData)
+    
+    
     const endPoint = 'usuario/login'
-
+    
     this.http.post<Usuario>(`${this.baseUrlUser}${endPoint}`, loginData)
       .subscribe((resp) => {
-        console.log('login data', loginData)
-        console.log('respuesta del login', resp)
+        
         // CARGO EL TOKEN A LA VARIABLE TOKEN DECLARADA
         this.token = resp.token;
         this.usuario = {
@@ -125,9 +134,12 @@ export class SeguridadService {
 
         this.seguridadCambio.next(true);
         localStorage.setItem('token', resp.token)
+        localStorage.setItem('usuario', this.usuario.nombre)
         this.router.navigate(['/listado'])
+        
+        
       });
-
+      localStorage.clear();
     // this.usuario = {
     //   email: loginData.email,
     //   usuarioId: Math.round(Math.random() * 10000).toString(),
@@ -145,6 +157,8 @@ export class SeguridadService {
 
 
   logout() {
+
+    localStorage.clear();
     // this.usuario = {
     //   email: '',
     //   usuarioId: '',
@@ -158,6 +172,7 @@ export class SeguridadService {
     // disparara un evento en false
     this.seguridadCambio.next(false);
     localStorage.removeItem('token');
+    
     this.router.navigate(['/'])
   }
 

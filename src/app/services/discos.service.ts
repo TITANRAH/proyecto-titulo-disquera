@@ -16,7 +16,7 @@ export class DiscosService {
   discoSubject:any = new Subject();
   discosPaginationSubject = new Subject<Pagination>();
   
-  //discosSubjet = new Subject();
+ 
   private discos: Disco[] = [];
 
   // private discos: Disco[] = [
@@ -66,7 +66,7 @@ export class DiscosService {
   agregarDisco(disco: Disco) {
     
     // esto permite agregar elementos a una coleccion o arreglo
-    //this.discos.push(disco)
+    this.discos.push(disco)
     // esto me permite refrescar la lista sin neceidad de refrescar la pagina
     //el parametro podria ser disco yo creo que es la lista
     //this.discosSubjet.next(this.discos);
@@ -80,15 +80,14 @@ export class DiscosService {
     return this.discoSubject.asObservable();
   }
 
-  eliminarDisco(disco: Disco){
+  eliminarDisco(id: Disco){
 
-    // los dos metodos sirven pero siempre con el next
-
-      // this.discos = this.discos.filter(disco => disco !== discoNombre)
-      //this.discosSubjet.next(this.discos);
-    // const index = this.discos.findIndex(nombre => nombre )
-    // this.discos.splice(index,1)
-    // this.discosSubjet.next(this.discos);
+    let endPoint = 'disco/';
+    this.http.delete<Disco[]>(`${this.baseUrl}${endPoint}${id}`).subscribe((resp)=>{
+      this.discos = resp
+      
+     
+    })
 
   }
 

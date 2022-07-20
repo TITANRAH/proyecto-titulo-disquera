@@ -26,12 +26,6 @@ export class AutorNuevoComponent implements OnInit,OnDestroy {
 
     if(form.valid){
 
-      const autorNuevoRequest = {
-        //select autor son los ng model del select
-        //selectAutorTexto viene de la funcion selected
-        // id: this.selectAutor,
-        // seudonimo: this.selectAutorTexto
-      }
 
       const autorRequest ={
         

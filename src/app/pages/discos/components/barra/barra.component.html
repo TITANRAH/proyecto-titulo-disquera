@@ -1,8 +1,12 @@
 <mat-toolbar color="warn">
+    
     <button mat-icon-button (click)="onClicked()">
         <mat-icon>menu</mat-icon>
     </button>
     <div class="botones" fxHide.xs>
+       
+            
+        
 
         <button *ngIf="estadoUsuario" mat-button routerLink="/listado">
             DISCOS
@@ -19,6 +23,11 @@
         <button *ngIf="!estadoUsuario" mat-button routerLink="/">
             LOGIN
         </button>
+    </div>
+    
+    <div class="saludo">
+
+        <p *ngIf="estadoUsuario"><span>Hola <strong>{{nombreUsuario}}</strong> Bienvenido a la <strong>DISQUERA</strong> </span></p>
     </div>
     <span class="spacer"></span>
         <button class="logout" *ngIf="estadoUsuario"  mat-button (click)="logout()">
