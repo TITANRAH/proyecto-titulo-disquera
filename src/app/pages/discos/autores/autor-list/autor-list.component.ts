@@ -23,7 +23,7 @@ export class AutorListComponent implements OnInit, OnDestroy {
   // desde el servicio, y esto lo realizo en ngonit
   dataSource = new MatTableDataSource<Autor>();
   
-  autorEdit!:Autor;
+  
   autorSubscription = new Subscription();
 
   constructor(private autoresService: AutorService,

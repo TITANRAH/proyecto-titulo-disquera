@@ -14,7 +14,7 @@ export class BarraComponent implements OnInit, OnDestroy {
   
 
   estadoUsuario: any;
-  usuarioSubscription: Subscription = new Subscription
+  usuarioSubscription: Subscription = new Subscription()
   nombreUsuario:any;
 
   constructor(private seguridadService: SeguridadService) { }

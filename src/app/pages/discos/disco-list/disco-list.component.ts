@@ -20,11 +20,11 @@ import { DiscoComponent } from '../disco/disco.component';
 })
 export class DiscoListComponent implements OnInit, OnDestroy {
 
-  timeOut: any = null;
+  //timeOut: any = null;
 
 
   //arreglo de discos
-  discos: Disco[] = [];
+  //discos: Disco[] = [];
 
   // data de la tabla
   desplegarColumnas = ['titulo', 'descripcion', 'precio', 'autor', 'eliminar']
@@ -33,8 +33,8 @@ export class DiscoListComponent implements OnInit, OnDestroy {
   //discoSubscription!: Subscription
 
   //usamos esto para ordenar la tabla
-  @ViewChild(MatSort) ordenamiento!: MatSort
-  @ViewChild(MatPaginator) paginacion!: MatPaginator
+  // @ViewChild(MatSort) ordenamiento!: MatSort
+  // @ViewChild(MatPaginator) paginacion!: MatPaginator
   private discoSubscription: Subscription = new Subscription()
 
   totalDiscos = 0;
@@ -53,18 +53,14 @@ export class DiscoListComponent implements OnInit, OnDestroy {
              ) {
 
   }
-  ngOnDestroy(): void {
-    this.discoSubscription.unsubscribe()
-  }
 
-  //  estudiar es despues de iniciar el componente
 
 
 
 
   ngOnInit() {
 
-    //primero ejecuto el componente libro
+    //primero ejecuto el componente disco
     this.discosService.obtenerDiscos(
       this.discosPorPagina,
       this.paginaActual,
@@ -73,7 +69,6 @@ export class DiscoListComponent implements OnInit, OnDestroy {
       this.filterValue);
 
       this.discoSubscription =  this.discosService.getPaginationActual().subscribe((pagination: Pagination) => {
-
       this.dataSource = new MatTableDataSource<Disco>(pagination.data);
       this.totalDiscos = pagination.totalRows
     })
@@ -130,7 +125,7 @@ export class DiscoListComponent implements OnInit, OnDestroy {
   hacerFiltro(event:any) {
 
     // clearTimeout(this.timeOut)
-    let $this = this;
+   
 
     // this.timeOut = setTimeout(function(){
 
@@ -148,13 +143,13 @@ export class DiscoListComponent implements OnInit, OnDestroy {
           
 
         };
-          $this.filterValue = filterValorLocal
-        $this.discosService.obtenerDiscos(
-          $this.discosPorPagina,
-          $this.paginaActual,
-          $this.sort,
-          $this.sortDirection,
-          $this.filterValue
+          this.filterValue = filterValorLocal
+          this.discosService.obtenerDiscos(
+          this.discosPorPagina,
+          this.paginaActual,
+          this.sort,
+          this.sortDirection,
+          this.filterValue
         );
         console.log(filterValorLocal)
         //reemplazamos el filtervalue por el filtervalorlocal para hacer el filtro
@@ -249,5 +244,9 @@ export class DiscoListComponent implements OnInit, OnDestroy {
   //   // this.discos = this.discos.filter( listaDeDiscos => listaDeDiscos !== disco)
   // }
 
+  ngOnDestroy(): void {
+    this.discoSubscription.unsubscribe()
+  }
 
+  //  estudiar es despues de iniciar el componente
 }

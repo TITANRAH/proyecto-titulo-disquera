@@ -187,7 +187,7 @@ export class SeguridadService {
     // esto devuelve un true o un false
     // si hay usuario esta declaracioon es false
     // si no hay usuario esta dlaracion es true
-    return this.token != null;
+    return this.token != null; //true cuando esta en sesion ,false cuando no esta en sesion
   }
 
 

@@ -12,7 +12,6 @@ const routes: Routes = [
     path: '',
     // home component sera la ruta padre y sus hijos las demas
     component:HomeComponent,
-    
     children: [
       {
         path: 'listado',
@@ -26,11 +25,8 @@ const routes: Routes = [
         
       },
 
-   
-    
       ],
-      
-    
+         
   },
   
 ];

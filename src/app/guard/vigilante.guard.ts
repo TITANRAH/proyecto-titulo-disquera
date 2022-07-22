@@ -20,11 +20,12 @@ export class VigilanteGuard implements CanActivate {
     state: RouterStateSnapshot) {
 
     if (this.seguridadService.onSesion()) {
-      return true;
+      
+      return true; //cuando esta en sesion
     } else {
 
       this.router.navigate(['/'])
-      return false
+      return false // cuando no esta en sesion
     }
 
     
